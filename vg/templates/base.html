@@ -1,0 +1,42 @@
+<html>
+<head>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Bootstrap  JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script>
+
+    <!-- Bootstrap compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" />
+
+    <!-- Site styling -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+<title>
+    Visit Gjakova
+</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+      {% if config.BASE_PATH == '' %}
+          <a class="navbar-brand" href="/">Visit Gjakova</a>
+      {% else %}
+          <a class="navbar-brand" href="{{ config.BASE_PATH }}">Visit Gjakova</a>
+      {% endif %}
+  </nav>
+  <div class="container" style="padding-top:10px;">
+  	{% block body %}{% endblock %}
+  </div>
+
+  <div class="push-for-footer"></div>
+
+  <div class="footer">
+      <div class="footer-container" align="center">
+          <p class="text-muted">
+          </p>
+      </div>
+  </div>
+
+</body>
+</html>

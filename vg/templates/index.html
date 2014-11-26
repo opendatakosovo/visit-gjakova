@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block body %}
+
+<!-- leaflets CSS -->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+<!-- leaflets JS -->
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<script>
+
+  var map = undefined;
+  var markerLayerGroup = undefined;
+  var markerArray = [];
+
+  $(document).ready(function(){
+    map = L.map('map').setView([42.381067, 20.4290293], 16);
+
+    L.tileLayer('http://{s}.tiles.mapbox.com/v3/georges.jjc3k7b1/{z}/{x}/{y}.png', {
+        attribution: 'Data Source: <a href="http://opendatakosovo.org">Open Data Kosovo</a>',
+        maxZoom: 18
+    }).addTo(map);
+
+    $( ".category-select" ).change(function() {
+      cat = $(this).val()
+      if (cat != ''){
+        addMarkers(cat);
+      }
+    });
+
+  });
+
+  function addMarkers(category){
+    var placesRequestUrl = "{{ config.BASE_PATH }}/json/places/" + category;
+
+    // Reset marker array
+    markerArray = [];
+
+    // Clear previous layer of markers
+    if(markerLayerGroup != undefined){
+        map.removeLayer(markerLayerGroup);
+    }
+
+    $.get(placesRequestUrl, function(data, status){
+      $.each(data, function(key, place) {
+          var name = place.name;
+          var description = place.description;
+
+          var lat = place.coordinates.lat;
+          var lon = place.coordinates.lon;
+
+          var popupContent = '<strong>' + name + '</strong><br>' + description;
+          
+          var marker = L.marker([lat, lon]);
+          marker.bindPopup(popupContent);
+
+          markerArray.push(marker);
+      });
+
+      markerLayerGroup = L.layerGroup(markerArray);
+      map.addLayer(markerLayerGroup);
+    });
+  }
+</script>
+
+<div style="margin-left:15%;margin-right:15%">
+
+  <h1 class="page-title">Interactive Map of Gjakova</h1>
+
+  <hr style="margin-left:25%;margin-right:25%" class="style-eight">
+
+  <div style="text-align: center;">
+    Welcome to the interactive map of Gjakova. You can use the mapping system below to search for and locate places of interest in Gjakova. Choose a category to display, then click on the map pins to find out more.
+  </div>
+
+  <br>
+  <br>
+
+  <div class="category-selection-box">
+
+    <span class="text">Please choose a category to locate places of interest on the map below:</span>&nbsp;&nbsp;
+    <select class="category-select">
+      <option value="">Choose a Category</option>
+      <option value="historic-sites">Historic Sites</option>
+      <option value="museums">Museums</option>
+      <option value="cafes">Cafes</option>
+      <option value="restaurants">Restaurants</option>
+      <option value="bars">Bars</option>
+      <option value="parks">Parks</option>
+      <option value="accomodations">Accomodations</option>
+    </select>
+  </div>
+
+  <br>
+  <br>
+
+  <div id="map">
+  </div>
+
+</div>
+
+
+
+{% endblock %}
