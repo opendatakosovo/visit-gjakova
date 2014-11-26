@@ -25,6 +25,8 @@
       cat = $(this).val()
       if (cat != ''){
         addMarkers(cat);
+      }else if(markerLayerGroup != undefined){
+        map.removeLayer(markerLayerGroup);
       }
     });
 
