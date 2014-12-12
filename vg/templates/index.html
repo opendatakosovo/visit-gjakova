@@ -26,6 +26,7 @@
       if (cat != ''){
         addMarkers(cat);
       }else if(markerLayerGroup != undefined){
+        // No category selected, cleat the map.
         map.removeLayer(markerLayerGroup);
       }
     });
@@ -33,35 +34,7 @@
   });
 
   function addMarkers(category){
-    var placesRequestUrl = "{{ config.BASE_PATH }}/json/places/" + category;
 
-    // Reset marker array
-    markerArray = [];
-
-    // Clear previous layer of markers
-    if(markerLayerGroup != undefined){
-        map.removeLayer(markerLayerGroup);
-    }
-
-    $.get(placesRequestUrl, function(data, status){
-      $.each(data, function(key, place) {
-          var name = place.name;
-          var description = place.description;
-
-          var lat = place.coordinates.lat;
-          var lon = place.coordinates.lon;
-
-          var popupContent = '<strong>' + name + '</strong><br>' + description;
-          
-          var marker = L.marker([lat, lon]);
-          marker.bindPopup(popupContent);
-
-          markerArray.push(marker);
-      });
-
-      markerLayerGroup = L.layerGroup(markerArray);
-      map.addLayer(markerLayerGroup);
-    });
   }
 </script>
 
