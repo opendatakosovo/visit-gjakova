@@ -117,7 +117,7 @@ def register_url_rules(app):
 def register_json_url_rules(app):
     # Index.
     app.add_url_rule(
-        '/json/places/<string:category>',
+        '/json/places',
         view_func=Places.as_view('json_places'))
 
 
