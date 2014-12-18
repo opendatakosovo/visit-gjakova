@@ -37,7 +37,7 @@
   });
 
   function addMarkers(category){
-    $.get( "/json/businesses", function( businesses ) {
+    $.get( "{{ config.BASE_PATH }}/json/businesses", function( businesses ) {
       $(businesses).each(function( idx, biz ) {
         var name = biz.business_name;
         var lat = biz.location.coordinates.latitude;
