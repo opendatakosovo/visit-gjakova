@@ -97,7 +97,7 @@ def configure_logging(app):
 
 
 # Views for json responses
-from views.json.places import Places
+from views.json.businesses import Businesses
 
 # Views for Page rendering
 from views.pages.index import Index
@@ -117,8 +117,8 @@ def register_url_rules(app):
 def register_json_url_rules(app):
     # Index.
     app.add_url_rule(
-        '/json/places',
-        view_func=Places.as_view('json_places'))
+        '/json/businesses',
+        view_func=Businesses.as_view('json_businesses'))
 
 
 def register_page_url_rules(app):

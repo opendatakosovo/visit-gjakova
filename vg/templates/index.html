@@ -21,6 +21,7 @@
         maxZoom: 18
     }).addTo(map);
 
+    /*
     $( ".category-select" ).change(function() {
       cat = $(this).val()
       if (cat != ''){
@@ -29,12 +30,23 @@
         // No category selected, cleat the map.
         map.removeLayer(markerLayerGroup);
       }
-    });
+    });*/
+
+    addMarkers("dummy");
 
   });
 
   function addMarkers(category){
+    $.get( "/json/businesses", function( businesses ) {
+      $(businesses).each(function( idx, biz ) {
+        var name = biz.business_name;
+        var lat = biz.location.coordinates.latitude;
+        var lon = biz.location.coordinates.longitude;
 
+        var marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup("<strong>" + name + "</strong>");
+      });
+    });
   }
 </script>
 

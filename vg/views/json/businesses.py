@@ -4,13 +4,13 @@ import simplejson as json
 from vg import utils
 from urllib2 import urlopen
 
-class Places(View):
+class Businesses(View):
 
     def dispatch_request(self):
 
         api_url = utils.get_api_url()
 
-        req_url = "%s/json/places" % api_url
+        req_url = "%s/json/businesses" % api_url
 
         result = urlopen(req_url).read()
 
