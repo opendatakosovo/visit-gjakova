@@ -54,10 +54,10 @@
 
           var titleHtml = "<strong>" + name + "</strong>";
           var imgHml = "<img width='250' src='" + biz.picture.inside + "'/>";
-          var descriptionHtml = "<strong>Pershkrimi:</strong>" + biz.other_information;
-          var specialtyHtml = "<strong>Specialiteti:</strong>" + biz.speciality;
+          var descriptionHtml = "<strong>Pershkrimi:</strong> " + biz.other_information;
+          var specialtyHtml = "<strong>Specialiteti:</strong> " + biz.speciality;
 
-          var htmlContent = titleHtml + "<br>" + imgHml + "<br>" + descriptionHtml + "<br>" + specialtyHtml;
+          var htmlContent = titleHtml + "<br>" + imgHml + "<br><br>" + descriptionHtml + "<br>" + specialtyHtml;
           marker.bindPopup(htmlContent);
 
           markerArray.push(marker);
