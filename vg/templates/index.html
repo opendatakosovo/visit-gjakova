@@ -51,7 +51,14 @@
         
         if(lat != null && lon != null){
           var marker = L.marker([lat, lon]).addTo(map);
-          marker.bindPopup("<strong>" + name + "</strong><br><img width='250' src='" + biz.picture.inside + "'/>");
+
+          var titleHtml = "<strong>" + name + "</strong>";
+          var imgHml = "<img width='250' src='" + biz.picture.inside + "'/>";
+          var descriptionHtml = "<strong>Pershkrimi:</strong>" + biz.other_information;
+          var specialtyHtml = "<strong>Specialiteti:</strong>" + biz.speciality;
+
+          var htmlContent = titleHtml + "<br>" + imgHml + "<br>" + descriptionHtml + "<br>" + specialtyHtml;
+          marker.bindPopup(htmlContent);
 
           markerArray.push(marker);
         }
