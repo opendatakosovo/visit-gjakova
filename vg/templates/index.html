@@ -44,12 +44,12 @@
 
     $.get( "{{ config.BASE_PATH }}/json/businesses/" + category, function( businesses ) {
       $(businesses).each(function( idx, biz ) {
-        
+
         var name = biz.business_name;
         var lat = biz.location.coordinates.latitude;
         var lon = biz.location.coordinates.longitude;
         
-        if(lat != null & lon != null){
+        if(lat != null && lon != null){
           var marker = L.marker([lat, lon]).addTo(map);
           marker.bindPopup("<strong>" + name + "</strong><br><img width='250' src='" + biz.picture.inside + "'/>");
 
