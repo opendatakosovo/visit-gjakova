@@ -120,6 +120,10 @@ def register_json_url_rules(app):
         '/json/businesses',
         view_func=Businesses.as_view('json_businesses'))
 
+    app.add_url_rule(
+        '/json/businesses/<string:category>',
+        view_func=Businesses.as_view('json_businesses_category'))
+
 
 def register_page_url_rules(app):
     ''' Register the URL rules for page requests.

@@ -6,11 +6,15 @@ from urllib2 import urlopen
 
 class Businesses(View):
 
-    def dispatch_request(self):
+    def dispatch_request(self, category=None):
 
         api_url = utils.get_api_url()
+        req_url = None
 
-        req_url = "%s/json/businesses" % api_url
+        if category == None:
+            req_url = "%s/json/businesses" % api_url
+        else:
+            req_url = "%s/json/businesses/%s" % (api_url, category.replace(' ', '%20'))
 
         result = urlopen(req_url).read()
 

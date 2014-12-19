@@ -14,14 +14,13 @@
   var markerArray = [];
 
   $(document).ready(function(){
-    map = L.map('map').setView([42.381067, 20.4290293], 16);
+    map = L.map('map').setView([42.380491, 20.427397], 17);
 
     L.tileLayer('http://{s}.tiles.mapbox.com/v3/georges.jjc3k7b1/{z}/{x}/{y}.png', {
         attribution: 'Data Source: <a href="http://opendatakosovo.org">Open Data Kosovo</a>',
-        maxZoom: 18
+        maxZoom: 20
     }).addTo(map);
 
-    /*
     $( ".category-select" ).change(function() {
       cat = $(this).val()
       if (cat != ''){
@@ -30,22 +29,37 @@
         // No category selected, cleat the map.
         map.removeLayer(markerLayerGroup);
       }
-    });*/
-
-    addMarkers("dummy");
+    });
 
   });
 
   function addMarkers(category){
-    $.get( "{{ config.BASE_PATH }}/json/businesses", function( businesses ) {
+    // Reset marker array
+    markerArray = [];
+
+    // Clear previous layer of markers
+    if(markerLayerGroup != undefined){
+        map.removeLayer(markerLayerGroup);
+    }
+
+    $.get( "{{ config.BASE_PATH }}/json/businesses/" + category, function( businesses ) {
       $(businesses).each(function( idx, biz ) {
+        
         var name = biz.business_name;
         var lat = biz.location.coordinates.latitude;
         var lon = biz.location.coordinates.longitude;
+        
+        if(lat != null & lon != null){
+          var marker = L.marker([lat, lon]).addTo(map);
+          marker.bindPopup("<strong>" + name + "</strong><br><img width='250' src='" + biz.picture.inside + "'/>");
 
-        var marker = L.marker([lat, lon]).addTo(map);
-        marker.bindPopup("<strong>" + name + "</strong>");
+          markerArray.push(marker);
+        }
       });
+
+      markerLayerGroup = L.layerGroup(markerArray);
+      map.addLayer(markerLayerGroup);
+
     });
   }
 </script>
@@ -68,13 +82,13 @@
     <span class="text">Please choose a category to locate places of interest on the map below:</span>&nbsp;&nbsp;
     <select class="category-select">
       <option value="">Choose a Category</option>
-      <option value="historic-sites">Historic Sites</option>
-      <option value="museums">Museums</option>
-      <option value="cafes">Cafes</option>
-      <option value="restaurants">Restaurants</option>
-      <option value="bars">Bars</option>
-      <option value="parks">Parks</option>
-      <option value="accomodations">Accomodations</option>
+      <option value="Craft Shop">Craft Shop</option>
+      <option value="Clothing Shop">Clothing Shop</option>
+      <option value="Shoe Shop">Shoe Shop</option>
+      <option value="Cafe">Cafes</option>
+      <option value="Restaurant">Restaurants</option>
+      <option value="Bar">Bars</option>
+      <option value="Other">Others</option>
     </select>
   </div>
 
