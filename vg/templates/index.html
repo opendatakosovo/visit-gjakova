@@ -54,7 +54,15 @@
 
           var titleHtml = "<strong>" + name + "</strong>";
           var imgHml = "<img width='250' src='" + biz.picture.inside + "'/>";
-          var descriptionHtml = "<strong>Pershkrimi:</strong> " + biz.other_information;
+
+          
+          var description = biz.other_information;
+          if(description.length >= 100){
+            description = description.substring(0, 100) + "...";
+            
+          }
+          var descriptionHtml = "<strong>Pershkrimi:</strong> " + description;
+
           var specialtyHtml = "<strong>Specialiteti:</strong> " + biz.speciality;
 
           var htmlContent = titleHtml + "<br>" + imgHml + "<br><br>" + descriptionHtml + "<br>" + specialtyHtml;
